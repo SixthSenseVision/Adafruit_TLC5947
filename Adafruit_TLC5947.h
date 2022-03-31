@@ -21,7 +21,8 @@
 #ifndef _ADAFRUIT_TLC5947_H
 #define _ADAFRUIT_TLC5947_H
 
-#include <Arduino.h>
+// #include <Arduino.h>
+#include <wiringPi.h>
 
 /*!
  *    @brief  Class that stores state and functions for interacting with

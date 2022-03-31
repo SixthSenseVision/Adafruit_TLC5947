@@ -28,6 +28,7 @@
  */
 
 #include <Adafruit_TLC5947.h>
+#include <wiringPi.h>
 
 /*!
  *    @brief  Instantiates a new TLC5947 class
@@ -61,25 +62,31 @@ Adafruit_TLC5947::~Adafruit_TLC5947() { free(pwmbuffer); }
  *    @brief  Writes PWM data to the all connected TLC5947 boards
  */
 void Adafruit_TLC5947::write() {
-  digitalWrite(_lat, LOW);
+  // digitalWrite(_lat, LOW);
+  digitalWrite(_lat, 0);
   // 24 channels per TLC5974
   for (int16_t c = 24 * numdrivers - 1; c >= 0; c--) {
     // 12 bits per channel, send MSB first
     for (int8_t b = 11; b >= 0; b--) {
-      digitalWrite(_clk, LOW);
-
+      // digitalWrite(_clk, LOW);
+      digitalWrite(_clk, 0);
       if (pwmbuffer[c] & (1 << b))
-        digitalWrite(_dat, HIGH);
+        // digitalWrite(_dat, HIGH);
+        digitalWrite(_dat, 1);
       else
-        digitalWrite(_dat, LOW);
-
-      digitalWrite(_clk, HIGH);
+        // digitalWrite(_dat, LOW);
+        digitalWrite(_dat, 0);
+      // digitalWrite(_clk, HIGH);
+      digitalWrite(_clk, 1);
     }
   }
-  digitalWrite(_clk, LOW);
+  // digitalWrite(_clk, LOW);
+  digitalWrite(_clk, 0);
 
-  digitalWrite(_lat, HIGH);
-  digitalWrite(_lat, LOW);
+  // digitalWrite(_lat, HIGH);
+  digitalWrite(_lat, 1);
+  // digitalWrite(_lat, LOW);
+  digitalWrite(_lat, 0);
 }
 
 /*!
@@ -140,10 +147,16 @@ boolean Adafruit_TLC5947::begin() {
   if (!pwmbuffer)
     return false;
 
-  pinMode(_clk, OUTPUT);
-  pinMode(_dat, OUTPUT);
-  pinMode(_lat, OUTPUT);
-  digitalWrite(_lat, LOW);
+  // pinMode(_clk, OUTPUT);
+  // pinMode(_dat, OUTPUT);
+  // pinMode(_lat, OUTPUT);
+  // digitalWrite(_lat, LOW);
+
+  wiringPiSetup();
+  pinMode(0, OUTPUT); // _clk
+  pinMode(1, OUTPUT); // _dat
+  pinMode(2, OUTPUT); // _lat
+
 
   return true;
 }
