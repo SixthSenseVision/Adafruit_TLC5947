@@ -17,3 +17,5 @@ BSD license, check license.txt for more information
 All text above must be included in any redistribution
 
 To install, use the Arduino Library Manager and search for "Adafruit TLC5947" and install the library.
+
+Test
